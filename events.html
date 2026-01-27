@@ -77,6 +77,10 @@ body{
     padding:40px;
     color:var(--text-muted);
 }
+.event-card{
+    max-width:420px;
+    margin:auto;
+}
 
 .events{
     max-width:1200px;
@@ -343,7 +347,9 @@ fetch(CSV_URL)
 
       if (!title || approved !== "YES") return;
 
-      const eventDate = new Date(dateText);
+      const [day, month, year] = dateText.split("/");
+      const eventDate = new Date(year, month - 1, day);
+
       const isUpcoming = eventDate >= today;
 
       const card = document.createElement("div");
@@ -390,6 +396,7 @@ fetch(CSV_URL)
 
 </body>
 </html>
+
 
 
 
