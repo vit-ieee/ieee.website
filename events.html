@@ -94,7 +94,9 @@ body{
     display:flex;
     flex-direction:column;
     transition:transform .3s ease;
+    position:relative; /* ADD THIS */
 }
+
 .event-card:hover{transform:translateY(-6px)}
 
 .event-card img{
@@ -130,6 +132,27 @@ body{
     text-decoration:none;
     font-weight:600;
     font-size:14px;
+}
+/* ================= EVENT STATUS BADGE ================= */
+.event-status{
+    position:absolute;
+    top:14px;
+    left:14px;
+    padding:6px 14px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.3px;
+    color:#fff;
+    backdrop-filter:blur(6px);
+}
+
+.event-upcoming{
+    background:linear-gradient(135deg,#22c55e,#16a34a);
+}
+
+.event-past{
+    background:linear-gradient(135deg,#64748b,#475569);
 }
 
 /* ================= FOOTER ================= */
@@ -291,23 +314,40 @@ fetch(apiURL)
     status.style.display = "none";
 
     rows.reverse().forEach(r => {
-        if(!r.c[0]) return;
+    if(!r.c[0]) return;
 
-        const card = document.createElement("div");
-        card.className = "event-card";
+    const eventDateText = r.c[1]?.v || "";
+    const eventDate = new Date(eventDateText);
+    const today = new Date();
+    today.setHours(0,0,0,0);
 
-        card.innerHTML = `
-            ${r.c[3]?.v ? `<img src="${fixDriveLink(r.c[3].v)}">` : ""}
-            <div class="event-body">
-                <h3>${r.c[0].v}</h3>
-                <div class="event-date">${r.c[1]?.v || ""}</div>
-                <p>${r.c[2]?.v || ""}</p>
-            </div>
-            ${r.c[4]?.v ? `
-            <div class="event-footer">
-                <a href="${r.c[4].v}" target="_blank">Register</a>
-            </div>` : ""}
-        `;
+    const isUpcoming = eventDate >= today;
+
+    const card = document.createElement("div");
+    card.className = "event-card";
+
+    card.innerHTML = `
+        <div class="event-status ${isUpcoming ? "event-upcoming" : "event-past"}">
+            ${isUpcoming ? "Upcoming" : "Past"}
+        </div>
+
+        ${r.c[3]?.v ? `<img src="${fixDriveLink(r.c[3].v)}">` : ""}
+
+        <div class="event-body">
+            <h3>${r.c[0].v}</h3>
+            <div class="event-date">${eventDateText}</div>
+            <p>${r.c[2]?.v || ""}</p>
+        </div>
+
+        ${isUpcoming && r.c[4]?.v ? `
+        <div class="event-footer">
+            <a href="${r.c[4].v}" target="_blank">Register</a>
+        </div>` : ""}
+    `;
+
+    events.appendChild(card);
+});
+
 
         events.appendChild(card);
     });
@@ -342,3 +382,4 @@ document.querySelectorAll('a[href]').forEach(link => {
 
 </body>
 </html>
+
