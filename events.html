@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Events | IEEE VISAT Student Branch</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* ================= ROOT ================= */
+:root{
+    --bg-main:#05030f;
+    --bg-soft:#0b0720;
+    --purple-main:#430ebe;
+    --purple-soft:#bb4dea;
+    --text-main:#f1ecff;
+    --text-muted:#bfb8ea;
+    --white:#ffffff;
+}
+
+/* ================= RESET ================= */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+    font-family:"Segoe UI",system-ui,sans-serif;
+    background:linear-gradient(180deg,var(--bg-main),var(--bg-soft));
+    color:var(--text-main);
+    overflow-x:hidden;
+}
+
+/* ================= HEADER ================= */
+.header{
+    padding:22px 60px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(5,3,15,.85);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(255,255,255,.06);
+}
+.header img{height:44px}
+.nav{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+.nav a{
+    color:var(--text-muted);
+    margin-left:26px;
+    text-decoration:none;
+    font-size:14px;
+}
+.nav a:hover{color:var(--white)}
+
+/* ================= PAGE TITLE ================= */
+.page-title{
+    text-align:center;
+    padding:90px 20px 40px;
+}
+.page-title h1{
+    font-size:42px;
+    background:linear-gradient(
+        90deg,
+        var(--purple-main),
+        var(--purple-soft),
+        var(--white)
+    );
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+/* ================= EVENTS ================= */
+.status{
+    text-align:center;
+    padding:40px;
+    color:var(--text-muted);
+}
+
+.events{
+    max-width:1200px;
+    margin:auto;
+    padding:40px 20px 100px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:30px;
+}
+
+.event-card{
+    background:rgba(255,255,255,.05);
+    border-radius:18px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    transition:transform .3s ease;
+}
+.event-card:hover{transform:translateY(-6px)}
+
+.event-card img{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+}
+
+.event-body{
+    padding:20px;
+    flex:1;
+}
+.event-body h3{margin-bottom:8px}
+.event-date{
+    font-size:13px;
+    color:var(--purple-soft);
+    margin-bottom:8px;
+}
+.event-body p{
+    font-size:14px;
+    color:var(--text-muted);
+}
+
+.event-footer{
+    padding:20px;
+}
+.event-footer a{
+    display:inline-block;
+    padding:10px 26px;
+    border-radius:30px;
+    background:linear-gradient(135deg,var(--purple-main),var(--purple-soft));
+    color:#fff;
+    text-decoration:none;
+    font-weight:600;
+    font-size:14px;
+}
+
+/* ================= FOOTER ================= */
+.footer{
+    background:#070312;
+    padding:60px;
+}
+.footer-grid{
+    max-width:1200px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:40px;
+}
+.footer h4{margin-bottom:10px}
+.footer p,
+.footer a{
+    color:var(--text-muted);
+    text-decoration:none;
+    font-size:14px;
+}
+.footer a{
+    display:block;
+    margin-bottom:6px;
+}
+.footer a:hover{color:var(--white)}
+.footer-bottom{
+    text-align:center;
+    margin-top:40px;
+    font-size:13px;
+    color:var(--text-muted);
+}
+
+/* ================= MOBILE FIXES ONLY ================= */
+@media(max-width:900px){
+    .header{
+        padding:16px 20px;
+        flex-direction:column;
+        gap:14px;
+        text-align:center;
+    }
+    .nav a{
+        margin:6px 12px;
+        font-size:13px;
+    }
+    .page-title{
+        padding:70px 16px 30px;
+    }
+    .page-title h1{
+        font-size:34px;
+    }
+    .footer{
+        padding:40px 20px 30px;
+        text-align:center;
+    }
+    .footer-grid{
+        grid-template-columns:1fr;
+        gap:30px;
+    }
+}
+/* ================= PAGE TRANSITION (ADDED ONLY) ================= */
+body{
+    opacity: 0;
+    animation: pageFadeIn 0.6s ease forwards;
+}
+
+@keyframes pageFadeIn{
+    to{ opacity: 1; }
+}
+
+body.page-exit{
+    animation: pageFadeOut 0.4s ease forwards;
+}
+
+@keyframes pageFadeOut{
+    to{ opacity: 0; }
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="header">
+    <a href="index.html"><img src="LOGO2.png" alt="IEEE VISAT Logo"></a>
+    <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="events.html">Events</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="team.html">Team</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+</header>
+
+<section class="page-title">
+    <h1>Events</h1>
+</section>
+
+<div id="status" class="status">Loading events…</div>
+<div id="events" class="events"></div>
+
+<footer class="footer">
+    <div class="footer-grid">
+        <div>
+            <h4>IEEE VISAT Student Branch</h4>
+            <p>VISAT Engineering College<br>Kerala, India</p>
+        </div>
+        <div>
+            <h4>Quick Links</h4>
+            <a href="https://www.ieee.org/">IEEE</a>
+            <a href="https://ieeexplore.ieee.org/Xplore/home.jsp">IEEE Xplore</a>
+            <a href="https://ieeekerala.org/">IEEE Kerala Section</a>
+        </div>
+        <div>
+            <h4>Contact</h4>
+            <p>Email: ieeevisat@gmail.com</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        © 2026 IEEE VISAT Student Branch · All Rights Reserved
+    </div>
+</footer>
+
+<script>
+/* ================= CONFIG ================= */
+const SHEET_ID = "1iaH0WWft1BwaYDKOaZvbhETCWWXPnKPeesQKGhyHk3U";
+const SHEET_NAME = "Form Responses 2";
+
+/* ================= FIX DRIVE LINKS ================= */
+function fixDriveLink(url){
+    if(!url) return "";
+    if(url.includes("drive.google.com")){
+        const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+        if(match){
+            return `https://drive.google.com/uc?id=${match[1]}`;
+        }
+    }
+    return url;
+}
+
+/* ================= LOAD EVENTS ================= */
+const query = encodeURIComponent("SELECT A,B,C,D,E");
+const apiURL =
+`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${encodeURIComponent(SHEET_NAME)}&tq=${query}`;
+
+fetch(apiURL)
+.then(res => res.text())
+.then(text => {
+    const json = JSON.parse(text.substring(47).slice(0, -2));
+    const rows = json.table.rows;
+    const events = document.getElementById("events");
+    const status = document.getElementById("status");
+
+    if(!rows || rows.length === 0){
+        status.innerText = "No events available.";
+        return;
+    }
+
+    status.style.display = "none";
+
+    rows.reverse().forEach(r => {
+        if(!r.c[0]) return;
+
+        const card = document.createElement("div");
+        card.className = "event-card";
+
+        card.innerHTML = `
+            ${r.c[3]?.v ? `<img src="${fixDriveLink(r.c[3].v)}">` : ""}
+            <div class="event-body">
+                <h3>${r.c[0].v}</h3>
+                <div class="event-date">${r.c[1]?.v || ""}</div>
+                <p>${r.c[2]?.v || ""}</p>
+            </div>
+            ${r.c[4]?.v ? `
+            <div class="event-footer">
+                <a href="${r.c[4].v}" target="_blank">Register</a>
+            </div>` : ""}
+        `;
+
+        events.appendChild(card);
+    });
+})
+.catch(() => {
+    document.getElementById("status").innerText =
+        "Failed to load events. Check sheet access or internet.";
+});
+</script>
+<script>
+/* ================= PAGE TRANSITION SCRIPT (ADDED ONLY) ================= */
+document.querySelectorAll('a[href]').forEach(link => {
+    const href = link.getAttribute('href');
+
+    // Internal navigation only
+    if (
+        href &&
+        !href.startsWith('#') &&
+        !href.startsWith('http') &&
+        !href.startsWith('mailto')
+    ) {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.body.classList.add('page-exit');
+            setTimeout(() => {
+                window.location.href = href;
+            }, 400);
+        });
+    }
+});
+</script>
+
+</body>
+</html>

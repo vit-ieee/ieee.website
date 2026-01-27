@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Contact | IEEE VISAT Student Branch</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* ================= ROOT ================= */
+:root{
+    --bg-main:#05030f;
+    --bg-soft:#0b0720;
+    --purple-main:#430ebe;
+    --purple-soft:#bb4dea;
+    --text-main:#f1ecff;
+    --text-muted:#bfb8ea;
+    --white:#ffffff;
+}
+
+/* ================= RESET ================= */
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+    font-family:"Segoe UI",system-ui,sans-serif;
+    background:linear-gradient(180deg,var(--bg-main),var(--bg-soft));
+    color:var(--text-main);
+    overflow-x:hidden;
+}
+
+/* ================= HEADER ================= */
+.header{
+    padding:22px 60px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(5,3,15,.85);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(255,255,255,.06);
+}
+.header img{height:44px}
+.nav{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+.nav a{
+    color:var(--text-muted);
+    margin-left:26px;
+    text-decoration:none;
+    font-size:14px;
+}
+.nav a:hover{color:var(--white)}
+
+/* ================= PAGE TITLE ================= */
+.page-title{
+    text-align:center;
+    padding:90px 20px 40px;
+}
+.page-title h1{
+    font-size:42px;
+    background:linear-gradient(
+        90deg,
+        var(--purple-main),
+        var(--purple-soft),
+        var(--white)
+    );
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+.page-title p{
+    margin-top:10px;
+    color:var(--text-muted);
+}
+
+/* ================= CONTACT SECTION ================= */
+.contact-section{
+    max-width:1200px;
+    margin:auto;
+    padding:40px 20px 100px;
+    display:grid;
+    grid-template-columns:1.2fr 1fr;
+    gap:50px;
+}
+
+/* INFO */
+.contact-info h2{
+    margin-bottom:20px;
+}
+.info-item{
+    margin-bottom:18px;
+    font-size:15px;
+    color:var(--text-muted);
+}
+.info-item strong{
+    color:var(--white);
+    display:block;
+    margin-bottom:4px;
+}
+
+/* FORM */
+.contact-form{
+    background:rgba(255,255,255,.05);
+    border-radius:20px;
+    padding:30px;
+}
+.contact-form h2{
+    margin-bottom:20px;
+}
+.contact-form input,
+.contact-form textarea{
+    width:100%;
+    padding:12px 14px;
+    margin-bottom:16px;
+    border-radius:12px;
+    border:none;
+    outline:none;
+    font-size:14px;
+}
+.contact-form textarea{
+    resize:none;
+    height:120px;
+}
+.contact-form button{
+    display:inline-block;
+    padding:12px 32px;
+    border:none;
+    border-radius:30px;
+    background:linear-gradient(135deg,var(--purple-main),var(--purple-soft));
+    color:#fff;
+    font-weight:600;
+    cursor:pointer;
+}
+
+/* MAP */
+.map{
+    margin-top:40px;
+    border-radius:18px;
+    overflow:hidden;
+}
+.map iframe{
+    width:100%;
+    height:280px;
+    border:0;
+}
+
+/* ================= FOOTER ================= */
+.footer{
+    background:#070312;
+    padding:60px;
+}
+.footer-grid{
+    max-width:1200px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:40px;
+}
+.footer h4{margin-bottom:10px}
+.footer p,
+.footer a{
+    color:var(--text-muted);
+    text-decoration:none;
+    font-size:14px;
+}
+.footer a{
+    display:block;
+    margin-bottom:6px;
+}
+.footer a:hover{color:var(--white)}
+.footer-bottom{
+    text-align:center;
+    margin-top:40px;
+    font-size:13px;
+    color:var(--text-muted);
+}
+
+/* ================= MOBILE FIXES ONLY ================= */
+@media(max-width:900px){
+    .header{
+        padding:16px 20px;
+        flex-direction:column;
+        gap:14px;
+        text-align:center;
+    }
+    .nav a{
+        margin:6px 12px;
+        font-size:13px;
+    }
+    .page-title{
+        padding:70px 16px 30px;
+    }
+    .page-title h1{
+        font-size:34px;
+    }
+    .contact-section{
+        grid-template-columns:1fr;
+        gap:40px;
+    }
+    .footer{
+        padding:40px 20px 30px;
+        text-align:center;
+    }
+    .footer-grid{
+        grid-template-columns:1fr;
+        gap:30px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+    <a href="index.html"><img src="LOGO2.png" alt="IEEE VISAT Logo"></a>
+    <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="events.html">Events</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="team.html">Team</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+</header>
+
+<section class="page-title">
+    <h1>Contact Us</h1>
+    <p>Get in touch with IEEE VISAT Student Branch</p>
+</section>
+
+<section class="contact-section">
+
+    <!-- INFO -->
+    <div class="contact-info">
+        <h2>Reach Us</h2>
+
+        <div class="info-item">
+            <strong>Address</strong>
+            VISAT Engineering College<br>
+            Kerala, India
+        </div>
+
+        <div class="info-item">
+            <strong>Email</strong>
+            ieeevisat@gmail.com
+        </div>
+
+        <div class="info-item">
+            <strong>Phone</strong>
+            +91 9XXXXXXXXX
+        </div>
+
+        <div class="map">
+            <!-- Replace location if needed -->
+            <iframe
+                src="https://www.google.com/maps?q=VISAT%20Engineering%20College&output=embed">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="contact-form">
+        <h2>Send a Message</h2>
+        <!-- Replace action later if needed -->
+        <form>
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+
+</section>
+
+<footer class="footer">
+    <div class="footer-grid">
+        <div>
+            <h4>IEEE VISAT Student Branch</h4>
+            <p>VISAT Engineering College<br>Kerala, India</p>
+        </div>
+        <div>
+            <h4>Quick Links</h4>
+            <a href="https://www.ieee.org/">IEEE</a>
+            <a href="https://ieeexplore.ieee.org/Xplore/home.jsp">IEEE Xplore</a>
+            <a href="https://ieeekerala.org/">IEEE Kerala Section</a>
+        </div>
+        <div>
+            <h4>Contact</h4>
+            <p>Email: ieeevisat@gmail.com</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        © 2026 IEEE VISAT Student Branch · All Rights Reserved
+    </div>
+</footer>
+
+</body>
+</html>
