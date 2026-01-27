@@ -225,6 +225,8 @@ body.page-exit{
 <div id="status" class="status">Loading gallery…</div>
 <div id="gallery" class="gallery"></div>
 
+
+
 <footer class="footer">
     <div class="footer-grid">
         <div>
@@ -247,59 +249,93 @@ body.page-exit{
     </div>
 </footer>
 
+
+    
+
 <script>
-const SHEET_ID = "13txiEbJMhluqQ0V4LzFJpKI-xjZfOlBTQrFNSltL1j8";
-const SHEET_NAME = "Form Responses 1";
+const CSV_URL =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vSjJQD-v5dqmXrNCsvwpZ4c8N2XpqJ2LCPQG9lktj-gpw50iKf9VoUatAeZcEsNA8UWfaHqzxEreVtt/pub?output=csv";
 
 function fixDriveLink(url){
-    if(!url) return "";
-    if(url.includes("drive.google.com")){
-        const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-        if(match){
-            return `https://drive.google.com/uc?id=${match[1]}`;
-        }
-    }
-    return url;
+  if(!url) return "";
+  const id = url.match(/[-\w]{25,}/);
+  return id
+    ? `https://lh3.googleusercontent.com/d/${id[0]}=s1600`
+    : url;
 }
 
-const query = encodeURIComponent("SELECT A, B");
-const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${encodeURIComponent(SHEET_NAME)}&tq=${query}`;
 
-fetch(url)
-.then(res => res.text())
-.then(text => {
-    const json = JSON.parse(text.substring(47).slice(0, -2));
-    const rows = json.table.rows;
+function parseCSV(text){
+  const rows = [];
+  let row = [], val = "", insideQuotes = false;
+
+  for (let c of text) {
+    if (c === '"') insideQuotes = !insideQuotes;
+    else if (c === "," && !insideQuotes) {
+      row.push(val); val = "";
+    }
+    else if (c === "\n" && !insideQuotes) {
+      row.push(val); rows.push(row);
+      row = []; val = "";
+    }
+    else val += c;
+  }
+  row.push(val);
+  rows.push(row);
+  return rows;
+}
+
+fetch(CSV_URL)
+  .then(res => res.text())
+  .then(text => {
+    const data = parseCSV(text).slice(1);
     const gallery = document.getElementById("gallery");
     const status = document.getElementById("status");
 
-    if(!rows || rows.length === 0){
-        status.innerText = "No images added yet.";
-        return;
-    }
-
+    gallery.innerHTML = "";
     status.style.display = "none";
 
-    rows.reverse().forEach(row => {
-        if(!row.c[0]) return;
+    data.reverse().forEach((row, i) => {
+      const img = row[1]?.trim();
+      const caption = row[2]?.trim();
+      const approved = row[3]?.trim().toUpperCase();
 
-        const imgUrl = fixDriveLink(row.c[0].v);
-        const caption = row.c[1] ? row.c[1].v : "";
+      if (!img || approved !== "YES") return;
 
-        const div = document.createElement("div");
-        div.className = "photo";
-        div.innerHTML = `
-            <img src="${imgUrl}" alt="Gallery image">
-            ${caption ? `<div class="caption">${caption}</div>` : ""}
-        `;
-        gallery.appendChild(div);
+      const div = document.createElement("div");
+      div.className = "photo";
+      div.style.animationDelay = `${i * 0.05}s`;
+
+      div.innerHTML = `
+       <img src="${fixDriveLink(img)}" alt="Gallery image" loading="lazy">
+
+
+
+        ${caption ? `<div class="caption">${caption}</div>` : ""}
+      `;
+
+      gallery.appendChild(div);
     });
-})
-.catch(() => {
+
+    if (!gallery.children.length) {
+      status.style.display = "block";
+      status.innerText = "No images approved yet.";
+    }
+  })
+  .catch(() => {
     document.getElementById("status").innerText =
-        "Failed to load gallery. Please check internet or sheet access.";
-});
+      "Failed to load gallery.";
+  });
 </script>
+
+
+
+
+
+
+
+
+    
 <script>
 /* ================= PAGE TRANSITION SCRIPT (ADDED ONLY) ================= */
 document.querySelectorAll('a[href]').forEach(link => {
@@ -325,3 +361,22 @@ document.querySelectorAll('a[href]').forEach(link => {
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
