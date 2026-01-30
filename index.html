@@ -8,6 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+
 /* ================= ROOT VARIABLES ================= */
 :root{
     --bg-main:#05030f;
@@ -18,6 +19,26 @@
     --text-muted:#bfb8ea;
     --white:#ffffff;
 }
+/* STEP 5 – HOVER DEPTH */
+.card,
+.preview,
+.event-card{
+    transition:
+        transform .35s cubic-bezier(.22,1,.36,1),
+        box-shadow .35s ease;
+}
+
+.card:hover,
+.preview:hover,
+.event-card:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 22px 44px rgba(0,0,0,.28);
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
 
 /* ================= RESET ================= */
 *{margin:0;padding:0;box-sizing:border-box}
@@ -323,6 +344,20 @@ body.page-exit{
 @keyframes pageFadeOut{
     to{ opacity: 0; }
 }
+/* STEP 2 – SCROLL REVEAL BASE */
+.reveal{
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+        opacity 0.9s ease,
+        transform 0.9s cubic-bezier(.22,1,.36,1);
+}
+
+.reveal.active{
+    opacity: 1;
+    transform: translateY(0);
+}
+
 
 </style>
 </head>
@@ -462,6 +497,7 @@ body.page-exit{
     <div class="footer-bottom">© 2026 IEEE VISAT Student Branch · All Rights Reserved</div>
 </footer>
 <script>
+
 /* ================= PAGE TRANSITION SCRIPT (ADDED ONLY) ================= */
 document.querySelectorAll('a[href]').forEach(link => {
     const href = link.getAttribute('href');
@@ -483,6 +519,39 @@ document.querySelectorAll('a[href]').forEach(link => {
     }
 });
 </script>
+<script>
+/* STEP 3 – ADD REVEAL CLASS */
+document.querySelectorAll(
+    '.section, .card, .preview, .event-card'
+).forEach(el => el.classList.add('reveal'));
+</script>
+<script>
+/* STEP 4 – SCROLL OBSERVER */
+const observer = new IntersectionObserver(
+    entries => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting){
+                entry.target.classList.add('active');
+            }
+        });
+    },
+    { threshold: 0.12 }
+);
+
+document.querySelectorAll('.reveal')
+    .forEach(el => observer.observe(el));
+</script>
+<script>
+/* STEP 6 – SOFT PARALLAX */
+window.addEventListener('scroll', () => {
+    const hero = document.querySelector('.hero');
+    if(hero){
+        hero.style.transform = `translateY(${window.scrollY * 0.03}px)`;
+    }
+});
+</script>
+
+
 
 </body>
 </html>
