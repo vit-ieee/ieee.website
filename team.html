@@ -6,6 +6,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+/* ================= STAGGER EFFECT ================= */
+
+.team-grid .member-card{
+    transition-delay: calc(var(--i) * 0.08s);
+}
+
 /* ================= ROOT ================= */
 :root{
     --bg-main:#05030f;
@@ -16,6 +22,7 @@
     --text-muted:#bfb8ea;
     --white:#ffffff;
 }
+html{ scroll-behavior:smooth }
 
 /* ================= RESET ================= */
 *{margin:0;padding:0;box-sizing:border-box}
@@ -150,7 +157,10 @@ body{
     border-radius:20px;
     padding:28px 20px;
     text-align:center;
-    transition:transform .3s ease, box-shadow .3s ease;
+    transition:
+    transform .4s cubic-bezier(.22,1,.36,1),
+    box-shadow .4s ease;
+
 }
 .member-card:hover{
     transform:translateY(-8px);
@@ -250,6 +260,21 @@ body{
         gap:30px;
     }
 }
+/* ================= SCROLL REVEAL ================= */
+
+.reveal{
+    opacity: 0;
+    transform: translateY(30px);
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s cubic-bezier(.22,1,.36,1);
+}
+
+.reveal.show{
+    opacity: 1;
+    transform: translateY(0);
+}
+
 </style>
 </head>
 
@@ -741,10 +766,44 @@ body{
         © 2026 IEEE VISAT Student Branch · All Rights Reserved
     </div>
 </footer>
+<script>
+/* ================= SCROLL REVEAL SCRIPT ================= */
+
+const revealElements = document.querySelectorAll(
+    '.team-group, .member-card'
+);
+
+// add base class
+revealElements.forEach(el => el.classList.add('reveal'));
+
+const revealObserver = new IntersectionObserver(
+    entries => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting){
+                entry.target.classList.add('show');
+            }
+        });
+    },
+    {
+        threshold: 0.15
+    }
+);
+
+revealElements.forEach(el => revealObserver.observe(el));
+</script>
+<script>
+/* ================= STAGGER INDEX ================= */
+
+document.querySelectorAll('.team-grid').forEach(grid => {
+    grid.querySelectorAll('.member-card').forEach((card, i) => {
+        card.style.setProperty('--i', i);
+    });
+});
+</script>
+
 
 </body>
 </html>
-
 
 
 
