@@ -351,8 +351,7 @@ fetch(CSV_URL)
 
       if (!title || approved !== "YES") return;
 
-      const [day, month, year] = dateText.split("/");
-      const eventDate = new Date(year, month - 1, day);
+      
 
       const isUpcoming = eventDate >= today;
 
@@ -391,19 +390,5 @@ fetch(CSV_URL)
       "Failed to load events.";
   });
 </script>
-
-
-
-
-
-    
-
 </body>
 </html>
-
-
-
-
-
-
-
