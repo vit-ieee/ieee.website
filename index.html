@@ -73,15 +73,24 @@ body{
 
 /* ================= HERO ================= */
 .hero{
-    position:relative;
-    max-width:1200px;
-    margin:auto;
-    padding:120px 60px 110px;
-    display:grid;
-    grid-template-columns:1.2fr 0.8fr;
-    gap:80px;
-    align-items:center;
+    position: relative;
+    max-width: 1200px;
+    margin: auto;
+    padding: 120px 60px 110px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
+.hero-content{
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
 
 .tech-visual{
     position:absolute;
@@ -118,6 +127,12 @@ body{
     box-shadow:0 0 18px rgba(187,77,234,.8);
     animation:floatNode 6s infinite ease-in-out;
 }
+.tech-visual.right{
+    left: auto;
+    right: -160px;
+    transform: translateY(-50%) scaleX(-1);
+}
+
 .tech-visual .node:nth-child(1){top:90px;left:130px}
 .tech-visual .node:nth-child(2){top:210px;left:190px;animation-delay:2s}
 .tech-visual .node:nth-child(3){top:320px;left:150px;animation-delay:4s}
@@ -128,7 +143,7 @@ body{
     100%{transform:translateY(0);opacity:.4}
 }
 
-.hero-content{animation:fadeUp .9s ease forwards}
+
 @keyframes fadeUp{
     from{opacity:0;transform:translateY(18px)}
     to{opacity:1;transform:translateY(0)}
@@ -157,14 +172,9 @@ body{
 .stat strong{color:var(--white)}
 
 .logo-panel{
-    width:360px;
-    height:360px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:radial-gradient(circle,rgba(187,77,234,0.22),rgba(67,14,190,0.12),transparent 70%);
+    background: none;
 }
+
 .logo-panel img{width:140px}
 
 /* ================= SECTIONS ================= */
@@ -384,6 +394,13 @@ body.page-exit{
         <span class="node"></span>
         <span class="node"></span>
     </div>
+    <div class="tech-visual right">
+    <span class="node"></span>
+    <span class="node"></span>
+    <span class="node"></span>
+</div>
+
+    
 
     <div class="hero-content">
         <h1>IEEE VISAT<br>Student Branch</h1>
@@ -397,6 +414,7 @@ body.page-exit{
             <div class="stat"><strong>Since</strong> 2015</div>
         </div>
     </div>
+    
 
     <div class="logo-panel">
         <img src="LOG.png" alt="">
@@ -556,10 +574,3 @@ window.addEventListener('scroll', () => {
 
 </body>
 </html>
-
-
-
-
-
-
-
