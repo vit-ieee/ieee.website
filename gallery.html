@@ -203,6 +203,45 @@ body.page-exit{
 @keyframes pageFadeOut{
     to{ opacity: 0; }
 }
+/* ================= LIGHTBOX ================= */
+.lightbox{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.9);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .3s ease;
+    z-index:9999;
+}
+
+.lightbox.show{
+    opacity:1;
+    pointer-events:auto;
+}
+
+.lightbox img{
+    max-width:90%;
+    max-height:85%;
+    border-radius:16px;
+    transform:scale(.9);
+    transition:transform .3s ease;
+}
+
+.lightbox.show img{
+    transform:scale(1);
+}
+
+.lightbox-close{
+    position:absolute;
+    top:30px;
+    right:40px;
+    font-size:36px;
+    color:#fff;
+    cursor:pointer;
+}
 
 </style>
 </head>
@@ -361,30 +400,41 @@ document.querySelectorAll('a[href]').forEach(link => {
     }
 });
 </script>
+<script>
+/* ================= LIGHTBOX SCRIPT ================= */
+
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightbox-img");
+const closeBtn = document.querySelector(".lightbox-close");
+
+// Open image on click
+document.addEventListener("click", function(e){
+    if(e.target.matches(".photo img")){
+        lightboxImg.src = e.target.src;
+        lightbox.classList.add("show");
+    }
+});
+
+// Close on X click
+closeBtn.addEventListener("click", function(){
+    lightbox.classList.remove("show");
+});
+
+// Close on background click
+lightbox.addEventListener("click", function(e){
+    if(e.target === lightbox){
+        lightbox.classList.remove("show");
+    }
+});
+</script>
+
+<!-- ================= LIGHTBOX ================= -->
+<div id="lightbox" class="lightbox">
+    <span class="lightbox-close">&times;</span>
+    <img id="lightbox-img" src="" alt="Preview">
+</div>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
