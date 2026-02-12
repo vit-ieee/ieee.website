@@ -375,10 +375,10 @@ if(dateText && dateText.includes("/")){
         ${poster ? `<img src="${fixDriveLink(poster)}" alt="${title}">` : ""}
 
         <div class="event-body">
-          <h3>${title}</h3>
-          <div class="event-date">${dateText}</div>
-          <p>${desc || ""}</p>
+         <h3>${title}</h3>
+         <p>${desc || ""}</p>
         </div>
+
 
         ${isUpcoming && reg ? `
           <div class="event-footer">
@@ -402,3 +402,7 @@ if(dateText && dateText.includes("/")){
 </script>
 </body>
 </html>
+<div class="event-body">
+  <h3>${title}</h3>
+  <p>${desc || ""}</p>
+</div>
