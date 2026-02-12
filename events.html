@@ -104,7 +104,11 @@ body{
     position:relative; /* ADD THIS */
 }
 
-.event-card:hover{transform:translateY(-6px)}
+.event-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 20px 40px rgba(67,14,190,.35);
+}
+
 
 .event-card img{
     width:100%;
@@ -351,8 +355,12 @@ fetch(CSV_URL)
 
       if (!title || approved !== "YES") return;
 
-      const [day, month, year] = dateText.split("/");
-      const eventDate = new Date(year, month - 1, day);
+      let eventDate = new Date();
+if(dateText && dateText.includes("/")){
+  const [day, month, year] = dateText.split("/");
+  eventDate = new Date(year, month - 1, day);
+}
+
 
       const isUpcoming = eventDate >= today;
 
@@ -374,7 +382,8 @@ fetch(CSV_URL)
 
         ${isUpcoming && reg ? `
           <div class="event-footer">
-            <a href="${reg}" target="_blank">Register</a>
+            <a href="${reg}" target="_blank" rel="noopener">Register</a>
+
           </div>` : ""}
       `;
 
@@ -393,4 +402,3 @@ fetch(CSV_URL)
 </script>
 </body>
 </html>
-
