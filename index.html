@@ -352,19 +352,103 @@ body{
 .footer-bottom{text-align:center;margin-top:40px;font-size:13px;color:var(--text-muted)}
 
 /* ================= MOBILE ================= */
-@media(max-width:900px){
-    .header{padding:16px 20px;flex-direction:column;gap:14px}
-    .nav{flex-wrap:wrap;justify-content:center;gap:16px}
-    .hero{grid-template-columns:1fr;padding:70px 20px;text-align:center}
-    .hero h1{font-size:38px}
-    .cta{display:flex;justify-content:center}
-    .stats{justify-content:center}
-    .tech-visual,.logo-panel{display:none}
-    .section{padding:60px 20px;text-align:center}
-    .cards{grid-template-columns:1fr}
-    .footer{padding:50px 20px 30px;text-align:center}
-    .footer-grid{grid-template-columns:1fr;gap:30px}
+/* ================= MOBILE REFINED ================= */
+/* ================= HAMBURGER ================= */
+.menu-toggle{
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
 }
+
+.menu-toggle span{
+    width: 26px;
+    height: 3px;
+    background: var(--white);
+    border-radius: 4px;
+    transition: 0.3s ease;
+}
+
+/* ================= MOBILE WITH HAMBURGER ================= */
+@media (max-width: 900px){
+
+    .header{
+        padding: 16px 20px;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    /* Show hamburger */
+    .menu-toggle{
+        display: flex;
+    }
+
+    /* Hide nav initially */
+    .nav{
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(5,3,15,0.98);
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 30px 0;
+        transform: translateY(-10px);
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.3s ease;
+    }
+
+    .nav.active{
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .hero{
+    padding: 100px 20px 60px;
+    text-align: center;
+    }
+
+
+    .hero h1{
+        font-size: 36px;
+    }
+
+    .tech-visual,
+    .logo-panel{
+        display: none;
+    }
+
+    .section{
+        padding: 70px 20px;
+        text-align: center;
+    }
+
+    .cards{
+        grid-template-columns: 1fr;
+    }
+
+    .event-grid{
+        grid-template-columns: 1fr;
+    }
+
+    .preview-grid{
+        grid-template-columns: 1fr;
+    }
+
+    .footer{
+        padding: 50px 20px 30px;
+        text-align: center;
+    }
+
+    .footer-grid{
+        grid-template-columns: 1fr;
+    }
+}
+
+
 /* ================= PAGE TRANSITION (ADDED ONLY) ================= */
 body{
     opacity: 0;
@@ -413,6 +497,12 @@ body.page-exit{
         <a href="team.html">Team</a>
         <a href="contact.html">Contact</a>
     </nav>
+    <div class="menu-toggle" id="menu-toggle">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
 </header>
 
 <section class="hero">
@@ -436,10 +526,17 @@ body.page-exit{
     <a href="#vision">Explore Our Vision</a>
 </div>
         <div class="stats">
-            <div class="stat"><strong>100+</strong> Members</div>
-            <div class="stat"><strong>30+</strong> Events</div>
-            <div class="stat"><strong>Since</strong> 2015</div>
-        </div>
+    <div class="stat">
+        <strong class="counter" data-target="100">0</strong>+ Members
+    </div>
+    <div class="stat">
+        <strong class="counter" data-target="30">0</strong>+ Events
+    </div>
+    <div class="stat">
+        Since <strong class="counter" data-target="2015">0</strong>
+    </div>
+</div>
+
     </div>
     
 
@@ -565,6 +662,57 @@ document.querySelectorAll('a[href]').forEach(link => {
     }
 });
 </script>
+<script>
+const toggle = document.getElementById("menu-toggle");
+const nav = document.querySelector(".nav");
+
+toggle.addEventListener("click", () => {
+    nav.classList.toggle("active");
+});
+</script>
+
+
+
+
+<script>
+const counters = document.querySelectorAll('.counter');
+let counterStarted = false;
+
+const counterObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting && !counterStarted) {
+            counterStarted = true;
+
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const duration = 1500;
+                const increment = target / (duration / 16);
+
+                let current = 0;
+
+                const updateCounter = () => {
+                    current += increment;
+                    if (current < target) {
+                        counter.innerText = Math.floor(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+
+                updateCounter();
+            });
+        }
+    });
+}, { threshold: 0.4 });
+
+counterObserver.observe(document.querySelector('.stats'));
+</script>
+
+
+
+
+
 <script>
 /* STEP 3 – ADD REVEAL CLASS */
 document.querySelectorAll(
