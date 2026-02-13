@@ -245,6 +245,41 @@ body.menu-open{
     }
 }
 
+/* ================= SCROLL TO TOP ================= */
+.scroll-top{
+    position:fixed;
+    bottom:30px;
+    right:30px;
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    border:none;
+    cursor:pointer;
+    font-size:20px;
+
+    background:linear-gradient(135deg,var(--purple-main),var(--purple-soft));
+    color:#fff;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.4);
+
+    opacity:0;
+    pointer-events:none;
+    transition:0.3s ease;
+    z-index:500;
+}
+
+.scroll-top.show{
+    opacity:1;
+    pointer-events:auto;
+}
+
+.scroll-top:hover{
+    transform:translateY(-3px);
+}
 
 /* ================= PAGE TRANSITION (ADDED ONLY) ================= */
 body{
@@ -340,6 +375,7 @@ body.page-exit{
     <span class="lightbox-close">&times;</span>
     <img id="lightbox-img" src="" alt="Preview">
 </div>
+<button id="scrollTopBtn" class="scroll-top">↑</button>
 
 
 
@@ -442,16 +478,7 @@ fetch(CSV_URL)
     document.getElementById("status").innerText =
       "Failed to load gallery.";
   });
-</script>
-
-
-
-
-
-
-
-
-    
+</script>  
 <script>
 /* ================= PAGE TRANSITION SCRIPT (ADDED ONLY) ================= */
 document.querySelectorAll('a[href]').forEach(link => {
@@ -519,9 +546,26 @@ document.querySelectorAll(".nav a").forEach(link => {
 });
 
 </script>
+<script>
+const scrollBtn = document.getElementById("scrollTopBtn");
 
+// Show button after scrolling 400px
+window.addEventListener("scroll", () => {
+    if(window.scrollY > 400){
+        scrollBtn.classList.add("show");
+    } else {
+        scrollBtn.classList.remove("show");
+    }
+});
 
-
+// Smooth scroll to top
+scrollBtn.addEventListener("click", () => {
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+});
+</script>
 
 </body>
 </html>
