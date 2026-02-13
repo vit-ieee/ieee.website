@@ -200,33 +200,81 @@ body{
     color:var(--text-muted);
 }
 
+
+
+
+
+
+
+
 /* ================= MOBILE FIXES ONLY ================= */
-@media(max-width:900px){
+/* ================= MOBILE WITH HAMBURGER ================= */
+@media (max-width: 900px){
+
     .header{
         padding:16px 20px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* Show hamburger */
+    .menu-toggle{
+        display:flex;
+    }
+
+    /* Hide nav initially */
+    .nav{
+        position:absolute;
+        top:100%;
+        left:0;
+        width:100%;
+        background:rgba(5,3,15,0.98);
         flex-direction:column;
-        gap:14px;
-        text-align:center;
+        align-items:center;
+        gap:22px;
+        padding:30px 0;
+        opacity:0;
+        transform:translateY(-10px);
+        pointer-events:none;
+        transition:0.3s ease;
     }
+
+    .nav.active{
+        opacity:1;
+        transform:translateY(0);
+        pointer-events:auto;
+    }
+
     .nav a{
-        margin:6px 12px;
-        font-size:13px;
+        margin:0;
+        font-size:15px;
     }
+
     .page-title{
         padding:70px 16px 30px;
     }
+
     .page-title h1{
-        font-size:34px;
+        font-size:32px;
     }
+
+    .events{
+        padding:30px 16px 70px;
+        gap:20px;
+    }
+
     .footer{
         padding:40px 20px 30px;
         text-align:center;
     }
+
     .footer-grid{
         grid-template-columns:1fr;
         gap:30px;
     }
 }
+
 /* ================= PAGE TRANSITION (ADDED ONLY) ================= */
 body{
     opacity: 0;
@@ -252,8 +300,14 @@ body.page-exit{
 
 <header class="header">
     <a href="index.html"><img src="IEEELO.png" alt="IEEE VISAT Logo"></a>
+
+    <div class="menu-toggle" id="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
     
-    <nav class="nav">
+    <nav class="nav" id="nav">
         <a href="index.html">Home</a>
         <a href="events.html">Events</a>
         <a href="gallery.html">Gallery</a>
@@ -261,6 +315,7 @@ body.page-exit{
         <a href="contact.html">Contact</a>
     </nav>
 </header>
+
 
 <section class="page-title">
     <h1>Events</h1>
@@ -400,9 +455,14 @@ if(dateText && dateText.includes("/")){
       "Failed to load events.";
   });
 </script>
+<script>
+const toggle = document.getElementById("menu-toggle");
+const nav = document.getElementById("nav");
+
+toggle.addEventListener("click", () => {
+    nav.classList.toggle("active");
+});
+</script>
+
 </body>
 </html>
-<div class="event-body">
-  <h3>${title}</h3>
-  <p>${desc || ""}</p>
-</div>
