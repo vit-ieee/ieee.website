@@ -223,45 +223,88 @@ body{
     font-size:13px;
     color:var(--text-muted);
 }
+/* ================= HAMBURGER ================= */
+.menu-toggle{
+    display:none;
+    flex-direction:column;
+    gap:6px;
+    cursor:pointer;
+    z-index:200;
+}
+
+.menu-toggle span{
+    width:26px;
+    height:3px;
+    background:var(--white);
+    border-radius:4px;
+    transition:0.3s ease;
+}
 
 /* ================= MOBILE FIXES ONLY ================= */
+/* ================= MOBILE WITH HAMBURGER ================= */
 @media(max-width:900px){
+
     .header{
         padding:16px 20px;
+        flex-direction:row;
+        justify-content:space-between;
+        align-items:center;
+        position:relative;
+    }
+
+    .menu-toggle{
+        display:flex;
+    }
+
+    .nav{
+        position:absolute;
+        top:100%;
+        left:0;
+        width:100%;
+        background:rgba(5,3,15,0.98);
         flex-direction:column;
-        gap:14px;
-        text-align:center;
+        align-items:center;
+        gap:22px;
+        padding:28px 0;
+        opacity:0;
+        transform:translateY(-10px);
+        pointer-events:none;
+        transition:0.3s ease;
     }
+
+    .nav.active{
+        opacity:1;
+        transform:translateY(0);
+        pointer-events:auto;
+    }
+
     .nav a{
-        margin:6px 12px;
-        font-size:13px;
+        font-size:15px;
     }
+
     .page-title{
-        padding:70px 16px 30px;
+        padding:60px 16px 25px;
     }
+
     .page-title h1{
-        font-size:34px;
+        font-size:30px;
     }
+
     .team-section{
         padding:30px 16px 80px;
     }
-    .team-group h2{
-        font-size:24px;
-        margin-bottom:20px;
-    }
-    .member-card img{
-        width:100px;
-        height:100px;
-    }
+
     .footer{
-        padding:40px 20px 30px;
+        padding:35px 18px 25px;
         text-align:center;
     }
+
     .footer-grid{
         grid-template-columns:1fr;
-        gap:30px;
+        gap:24px;
     }
 }
+
 /* ================= SCROLL REVEAL ================= */
 
 .reveal{
@@ -284,6 +327,11 @@ body{
 
 <header class="header">
     <a href="index.html"><img src="IEEELO.png" alt="IEEE VISAT Logo"></a>
+    <div class="menu-toggle" id="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
     <nav class="nav">
         <a href="index.html">Home</a>
         <a href="events.html">Events</a>
@@ -768,34 +816,45 @@ body{
         © 2026 IEEE VISAT Student Branch · All Rights Reserved
     </div>
 </footer>
+<!-- ================= REVEAL SCRIPT ================= -->
 <script>
-/* ================= SCROLL REVEAL SCRIPT ================= */
-
 const revealElements = document.querySelectorAll(
     '.team-group, .member-card'
 );
 
-// add base class
 revealElements.forEach(el => el.classList.add('reveal'));
 
 const revealObserver = new IntersectionObserver(
-    entries => {
+    (entries, observer) => {
         entries.forEach(entry => {
             if(entry.isIntersecting){
                 entry.target.classList.add('show');
+                observer.unobserve(entry.target);
             }
         });
     },
     {
-        threshold: 0.15
+        threshold: 0.12,
+        rootMargin: "0px 0px -40px 0px"
     }
 );
 
 revealElements.forEach(el => revealObserver.observe(el));
-</script>
-<script>
-/* ================= STAGGER INDEX ================= */
 
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        revealElements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if(rect.top < window.innerHeight - 40){
+                el.classList.add('show');
+            }
+        });
+    }, 200);
+});
+</script>
+
+<!-- ================= STAGGER INDEX ================= -->
+<script>
 document.querySelectorAll('.team-grid').forEach(grid => {
     grid.querySelectorAll('.member-card').forEach((card, i) => {
         card.style.setProperty('--i', i);
@@ -803,13 +862,22 @@ document.querySelectorAll('.team-grid').forEach(grid => {
 });
 </script>
 
+<!-- ================= HAMBURGER ================= -->
+<script>
+const toggle = document.getElementById("menu-toggle");
+const nav = document.querySelector(".nav");
+
+toggle.addEventListener("click", () => {
+    nav.classList.toggle("active");
+});
+
+document.querySelectorAll(".nav a").forEach(link => {
+    link.addEventListener("click", () => {
+        nav.classList.remove("active");
+    });
+});
+</script>
+
 
 </body>
 </html>
-
-
-
-
-
-
-
