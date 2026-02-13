@@ -151,10 +151,37 @@ body{
 .hero h1{
     font-size:56px;
     line-height:1.15;
-    background:linear-gradient(90deg,var(--purple-main),var(--purple-soft),var(--white));
+
+    background:linear-gradient(
+        90deg,
+        var(--purple-main),
+        var(--purple-soft),
+        var(--white),
+        var(--purple-soft),
+        var(--purple-main)
+    );
+
+    background-size:300% 300%;
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
+
+    animation:gradientFlow 8s ease-in-out infinite;
 }
+
+
+@keyframes gradientFlow{
+    0%{
+        background-position:0% 50%;
+    }
+    50%{
+        background-position:100% 50%;
+    }
+    100%{
+        background-position:0% 50%;
+    }
+}
+
+
 .hero p{margin-top:22px;font-size:18px;color:var(--text-muted)}
 
 .cta{margin-top:36px}
