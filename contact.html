@@ -16,6 +16,7 @@
     --text-muted:#bfb8ea;
     --white:#ffffff;
 }
+/* ================= ROOT ================= */
 
 /* ================= RESET ================= */
 *{margin:0;padding:0;box-sizing:border-box}
@@ -26,6 +27,7 @@ body{
     color:var(--text-main);
     overflow-x:hidden;
 }
+/* ================= RESET ================= */
 
 /* ================= HEADER ================= */
 .header{
@@ -53,6 +55,7 @@ body{
     font-size:14px;
 }
 .nav a:hover{color:var(--white)}
+/* ================= HEADER ================= */
 
 /* ================= PAGE TITLE ================= */
 .page-title{
@@ -74,6 +77,7 @@ body{
     margin-top:10px;
     color:var(--text-muted);
 }
+/* ================= PAGE TITLE ================= */
 
 /* ================= CONTACT SECTION ================= */
 .contact-section{
@@ -83,7 +87,10 @@ body{
     display:grid;
     grid-template-columns:1.2fr 1fr;
     gap:50px;
+    align-items:start;   
 }
+
+/* ================= CONTACT SECTION ================= */
 
 /* INFO */
 .contact-info h2{
@@ -105,6 +112,9 @@ body{
     background:rgba(255,255,255,.05);
     border-radius:20px;
     padding:30px;
+    border:1px solid rgba(187,77,234,.2);
+    box-shadow:0 20px 40px rgba(0,0,0,.35);
+
 }
 .contact-form h2{
     margin-bottom:20px;
@@ -112,27 +122,51 @@ body{
 .contact-form input,
 .contact-form textarea{
     width:100%;
-    padding:12px 14px;
-    margin-bottom:16px;
-    border-radius:12px;
-    border:none;
-    outline:none;
+    padding:14px 16px;
+    margin-bottom:18px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.06);
+    color:var(--white);
     font-size:14px;
+    transition:all .3s ease;
 }
-.contact-form textarea{
-    resize:none;
-    height:120px;
+
+.contact-form input:focus,
+.contact-form textarea:focus{
+    border:1px solid var(--purple-soft);
+    box-shadow:0 0 0 3px rgba(187,77,234,.2);
 }
+
 .contact-form button{
-    display:inline-block;
-    padding:12px 32px;
+    padding:14px 34px;
     border:none;
-    border-radius:30px;
+    border-radius:40px;
     background:linear-gradient(135deg,var(--purple-main),var(--purple-soft));
     color:#fff;
     font-weight:600;
     cursor:pointer;
+    transition:all .3s ease;
 }
+
+.contact-form button:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 24px rgba(67,14,190,.4);
+}
+.contact-section{
+    position:relative;
+}
+
+.contact-section::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:radial-gradient(circle at 20% 30%,
+        rgba(187,77,234,.08),
+        transparent 70%);
+    pointer-events:none;
+}
+
 
 /**************************** MAP******************************** */
 .map{
@@ -145,6 +179,7 @@ body{
     height:280px;
     border:0;
 }
+/**************************** MAP******************************** */
 
 /* ================= FOOTER ================= */
 .footer{
@@ -176,6 +211,7 @@ body{
     font-size:13px;
     color:var(--text-muted);
 }
+/* ================= FOOTER ================= */
 
 /* ================= MOBILE ================= */
 @media(max-width:900px){
@@ -208,13 +244,31 @@ body{
         gap:30px;
     }
 }
+/* ================= MOBILE ================= */
+/* ================= PAGE TRANSITION (ADDED ONLY) ================= */
+body{
+    opacity: 0;
+    animation: pageFadeIn 0.6s ease forwards;
+}
+
+@keyframes pageFadeIn{
+    to{ opacity: 1; }
+}
+
+body.page-exit{
+    animation: pageFadeOut 0.4s ease forwards;
+}
+
+@keyframes pageFadeOut{
+    to{ opacity: 0; }
+}
 </style>
 </head>
 
 <body>
 
 <header class="header">
-    <a href="index.html"><img src="LOGO2.png" alt="IEEE VISAT Logo"></a>
+    <a href="index.html"><img src="IEEELO.png" alt="IEEE VISAT Logo"></a>
     <nav class="nav">
         <a href="index.html">Home</a>
         <a href="events.html">Events</a>
@@ -231,58 +285,56 @@ body{
 
 <section class="contact-section">
 
-    <!-- INFO -->
+    <!-- address data info -->
     <div class="contact-info">
         <h2>Reach Us</h2>
 
         <div class="info-item">
             <strong>Address</strong>
-            VISAT Engineering College<br>
-            Kerala, India
+            Vijnan Nagar, Nelloorupara,<br>
+Mutholapuram Post, Elanji,<br>
+Ernakulam, Kerala 686665
         </div>
+
+
+
 
         <div class="info-item">
             <strong>Email</strong>
             ieeevisat@gmail.com
         </div>
 
-        <div class="info-item">
-            <strong>Phone</strong>
-            +91 9XXXXXXXXX
-        </div>
 
+
+
+        <div class="info-item">
+    <strong>Follow Us</strong>
+    <a href="https://www.linkedin.com/in/i-e-e-e-visat-a46025255?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank">LinkedIn</a><br>            <!-- linkedin -->
+    <a href="https://www.instagram.com/ieee_visat?igsh=MXFpcDQ4MWk1NXlnOA==" target="_blank">Instagram</a><br>                                                                   <!-- instagram -->
+    <a href="https://whatsapp.com/channel/0029Vb7DrB82ER6eTvVy5u02" target="_blank">WhatsAppChannel</a>                                                                          <!-- whatsapp -->
+</div>
         <div class="map">
-            <!-- Replace location if needed -->
+            <!-- Replace location here -->
             <iframe
                 src="https://www.google.com/maps?q=VISAT%20Engineering%20College&output=embed">
             </iframe>
         </div>
     </div>
-
     <!-- FORM -->
     <div class="contact-form">
         <h2>Send a Message</h2>
-        <!-- Replace action later if needed -->
+        <!-- replace mail here -->
         <form action="https://formsubmit.co/vitieee5@gmail.com" method="POST">
-
     <input type="text" name="name" placeholder="Your Name" required>
-
     <input type="email" name="email" placeholder="Your Email" required>
-
     <textarea name="message" placeholder="Your Message" required></textarea>
-
     <!-- Settings -->
     <input type="hidden" name="_captcha" value="false">
     <input type="hidden" name="_subject" value="New Message from IEEE VISAT Website">
-
     <button type="submit">Send Message</button>
-
 </form>
-
     </div>
-
 </section>
-
 <footer class="footer">
     <div class="footer-grid">
         <div>
@@ -304,6 +356,28 @@ body{
         © 2026 IEEE VISAT Student Branch · All Rights Reserved
     </div>
 </footer>
+<script>
 
+/* ================= PAGE TRANSITION SCRIPT (ADDED ONLY) ================= */
+document.querySelectorAll('a[href]').forEach(link => {
+    const href = link.getAttribute('href');
+
+    // Internal navigation only
+    if (
+        href &&
+        !href.startsWith('#') &&
+        !href.startsWith('http') &&
+        !href.startsWith('mailto')
+    ) {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.body.classList.add('page-exit');
+            setTimeout(() => {
+                window.location.href = href;
+            }, 400);
+        });
+    }
+});
+</script>
 </body>
 </html>
